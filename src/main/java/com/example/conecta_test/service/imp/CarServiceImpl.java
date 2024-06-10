@@ -36,14 +36,14 @@ public class CarServiceImpl implements ICarService {
             return new ApiResponseDto<CarDto>(false, null, "Formato de placas incorrecto", HttpStatus.BAD_REQUEST);
         }
         if(carByPlate.isPresent()){
-            return new ApiResponseDto<CarDto>(false, null, "Ya existe un carro de placas "+ carByPlate.get().getPlate(), HttpStatus.BAD_REQUEST);
+            return new ApiResponseDto<CarDto>(false, null, "Ya existe un vehículo de placas "+ carByPlate.get().getPlate(), HttpStatus.BAD_REQUEST);
         }
         if(carByVim.isPresent()){
             return new ApiResponseDto<CarDto>(false, null, "Error: el numero de chasis "+ carByVim.get().getVim() + " ya se encuentra registrado", HttpStatus.BAD_REQUEST);
         }
         Car newCar = carRepository.save(car);
         CarDto newCarDto = mapToDto(newCar);
-        return new ApiResponseDto<CarDto>(true, newCarDto, "Carro creado correctamente", HttpStatus.CREATED);
+        return new ApiResponseDto<CarDto>(true, newCarDto, "Vehículo creado correctamente", HttpStatus.CREATED);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class CarServiceImpl implements ICarService {
             return new ApiResponseDto<CanCirculateDto>(false, null, "Formato de placas incorrecto", HttpStatus.BAD_REQUEST);
         }
         if(!car.isPresent()){
-            return new ApiResponseDto<CanCirculateDto>(false, null, "No se encontro un carro de placas "+ plate, HttpStatus.BAD_REQUEST);
+            return new ApiResponseDto<CanCirculateDto>(false, null, "No se encontro un vehículo de placas "+ plate, HttpStatus.BAD_REQUEST);
         }
 
         String lastDigitStr = String.valueOf(plate.charAt(plate.length()-1));
@@ -87,7 +87,7 @@ public class CarServiceImpl implements ICarService {
         Car car = new Car();
         car.setAutomaker( carDto.getAutomaker().toUpperCase() );
         car.setColor(carDto.getColor().toUpperCase());
-        car.setModel(carDto.getColor().toUpperCase());
+        car.setModel(carDto.getModel().toUpperCase());
         car.setVim(carDto.getVim().toUpperCase());
         car.setPlate(carDto.getPlate().toUpperCase());
         return car;
